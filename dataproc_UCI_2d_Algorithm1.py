@@ -16,15 +16,31 @@ def read_array(segmt, n):
     return segmt[:, n].reshape(segmt.shape[0])
 
 
-def array_algorithm1(arr):
-    re_array_method = np.array([[1, 3, 5, 7, 9, 2, 4, 6, 8], [1, 4, 7, 1, 5, 8, 2, 5, 9], [3, 6, 9, 4, 8, 3, 7, 2, 6]],
-                               dtype=int)
-    new_array = np.array([], dtype=float)
-    for n in range(re_array_method.shape[0]):
-        for i in range(len(arr)):
-            new_array = np.append(new_array, arr[re_array_method[n][i] - 1])
-    out_array = np.append(arr, new_array)
-    return out_array  # 123456789 135792468 147158259 369483726
+def not_exist(arr, array):
+    for i in range(len(array)):
+        if arr[0] == array[i]:
+            if i != len(array)-1:
+                if arr[1] == array[i+1]:
+                    return False
+    return True
+
+
+def array_algorithm1(SI):
+    SIS = [1]
+    SI_new = [SI[0]]
+    i = 1
+    j = i + 1
+    while i != j:
+        if j > len(SI):
+            j = 1
+        elif not_exist([i, j], SIS) and not_exist([j, i], SIS):
+            SI_new.append(SI[j-1])
+            SIS.append(j)
+            i = j
+            j = j + 1
+        else:
+            j = j + 1
+    return SI_new[0:-1]  # 123456789 135792468 147158259 369483726
 
 
 def seg_algorithm1(data):
@@ -48,12 +64,12 @@ def dataset_algorithm1(data, proc_name):
     return new_data
 
 
-# train_x_algorithm1 = dataset_algorithm1(train_x, "train")
-# np.save("./UCI_data/np_2d/np_train_x_algorithm1.npy", train_x_algorithm1)
-# print(train_x_algorithm1.shape)    # (7352, 36, 128, 1)
-# test_x_algorithm1 = dataset_algorithm1(test_x, "test")
-# np.save("./UCI_data/np_2d/np_test_x_algorithm1.npy", test_x_algorithm1)
-# print(test_x_algorithm1.shape)     # (2947, 36, 128, 1)
+train_x_algorithm1 = dataset_algorithm1(train_x, "train")
+np.save("./UCI_data/np_2d/np_train_x_algorithm1_v1.npy", train_x_algorithm1)
+print(train_x_algorithm1.shape)    # (7352, 36, 128, 1)
+test_x_algorithm1 = dataset_algorithm1(test_x, "test")
+np.save("./UCI_data/np_2d/np_test_x_algorithm1_v1.npy", test_x_algorithm1)
+print(test_x_algorithm1.shape)     # (2947, 36, 128, 1)
 
 
 # test = test_x
