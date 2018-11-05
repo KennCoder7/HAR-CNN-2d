@@ -18,7 +18,7 @@ seg_len = 128
 num_channels = 1
 num_labels = 6
 batch_size = 100
-learning_rate = 0.001
+learning_rate = 0.0001
 num_epoches = 10000
 num_batches = train_x.shape[0] // batch_size
 print("### num_batch: ", num_batches, " ###")
@@ -40,7 +40,7 @@ conv1 = tf.layers.conv2d(
 print("### convolution layer 1 shape: ", conv1.shape, " ###")
 
 # pooling layer 1
-pool1 = tf.layers.max_pooling2d(
+pool1 = tf.layers.average_pooling2d(
     inputs=conv1,
     pool_size=[4, 4],
     strides=[4, 4],
@@ -60,7 +60,7 @@ conv2 = tf.layers.conv2d(
 print("### convolution layer 2 shape: ", conv2.shape, " ###")
 
 # pooling layer 2
-pool2 = tf.layers.max_pooling2d(
+pool2 = tf.layers.average_pooling2d(
     inputs=conv2,
     pool_size=[2, 2],
     strides=[2, 2],
@@ -108,10 +108,8 @@ train_op = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 correct_prediction = tf.equal(tf.argmax(y_, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
 
-with tf.Session(config=config) as session:
+with tf.Session() as session:
     tf.global_variables_initializer().run()
     for epoch in range(num_epoches):
         # cost_history = np.empty(shape=[0], dtype=float)
@@ -132,19 +130,18 @@ with tf.Session(config=config) as session:
             print(cm, '\n')
 
 
-# 2018/11/4 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer
-# Epoch:  575  Training Loss:  0.00015426171  Training Accuracy:  0.9991839
-# Epoch:  580  Training Loss:  6.914376e-05  Training Accuracy:  0.9991839
-# Testing Accuracy: 0.9104174
-# Epoch:  585  Training Loss:  0.00014687596  Training Accuracy:  0.99959195
-# Epoch:  590  Training Loss:  3.814704e-06  Training Accuracy:  0.99972796
-# Testing Accuracy: 0.9155073
-# Epoch:  595  Training Loss:  4.255858e-05  Training Accuracy:  0.9990479
-# Epoch:  600  Training Loss:  0.0013672196  Training Accuracy:  0.9978237
-# Testing Accuracy: 0.9107567
-# [[466   7  23   0   0   0]
-#  [ 20 418  33   0   0   0]
-#  [ 18  21 381   0   0   0]
-#  [  0   3   1 420  66   1]
-#  [  2   2   0  64 464   0]
-#  [  0   0   0   0   0 537]]
+# 2018/11/5 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer
+# Epoch:  455  Training Loss:  0.0153962895  Training Accuracy:  0.9855822
+# Epoch:  460  Training Loss:  0.07526402  Training Accuracy:  0.9893907
+# Testing Accuracy: 0.9093994
+# Epoch:  465  Training Loss:  0.017043516  Training Accuracy:  0.9878945
+# Epoch:  470  Training Loss:  0.48552203  Training Accuracy:  0.9851741
+# Testing Accuracy: 0.90091616
+
+# 2018/11/5 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer  max_pooling-->average_pooling
+# Epoch:  645  Training Loss:  0.16690484  Training Accuracy:  0.98843855
+# Epoch:  650  Training Loss:  0.43511367  Training Accuracy:  0.98626226
+# Testing Accuracy: 0.90872073
+# Epoch:  655  Training Loss:  0.2106536  Training Accuracy:  0.98762244
+# Epoch:  660  Training Loss:  0.07344559  Training Accuracy:  0.98775846
+# Testing Accuracy: 0.9192399

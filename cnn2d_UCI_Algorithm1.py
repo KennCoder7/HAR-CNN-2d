@@ -3,9 +3,9 @@ import numpy as np
 from sklearn import metrics
 
 print("### Process1 --- data load ###")
-train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1.npy')
+train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1_v1.npy')
 train_y = np.load('UCI_data/np_2d/np_train_y_2d.npy')
-test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1.npy')
+test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1_v1.npy')
 test_y = np.load('UCI_data/np_2d/np_test_y_2d.npy')
 print("### train_y (labels) shape: ", train_y.shape, " ###")
 print("### Process2 --- data spilt ###")
@@ -102,14 +102,10 @@ loss = -tf.reduce_sum(Y * tf.log(tf.clip_by_value(y_, 1e-10, 1.0)))
 print("Y shape: ", Y.shape, "y_ shape:", y_.shape)
 train_op = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 
-
 correct_prediction = tf.equal(tf.argmax(y_, 1), tf.argmax(Y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-
-with tf.Session(config=config) as session:
+with tf.Session() as session:
     tf.global_variables_initializer().run()
     for epoch in range(num_epoches):
         # cost_history = np.empty(shape=[0], dtype=float)
@@ -238,3 +234,17 @@ with tf.Session(config=config) as session:
 # Epoch:  325  Training Loss:  0.026298754  Training Accuracy:  0.9866703
 # Epoch:  330  Training Loss:  0.004654552  Training Accuracy:  0.9933351
 # Testing Accuracy: 0.92840177
+
+# 2018/11/5 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer data->v1
+# Epoch:  285  Training Loss:  0.0016494064  Training Accuracy:  0.9914309
+# Epoch:  290  Training Loss:  0.01279183  Training Accuracy:  0.9893907
+# Testing Accuracy: 0.9250085
+# Epoch:  295  Training Loss:  0.015500835  Training Accuracy:  0.9887106
+# Epoch:  300  Training Loss:  0.028742684  Training Accuracy:  0.96354735
+# Testing Accuracy: 0.9083814
+# [[474   3  19   0   0   0]
+#  [  6 453   9   3   0   0]
+#  [ 15   1 401   0   3   0]
+#  [  0   0   0 384  82  25]
+#  [  0   0   0  95 437   0]
+#  [  0   1   0   8   0 528]]

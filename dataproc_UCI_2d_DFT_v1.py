@@ -1,7 +1,7 @@
 import numpy as np
 
-train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1.npy')
-test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1.npy')
+train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1_v1.npy')
+test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1_v1.npy')
 
 
 def dataset_dft(data, proc_name):
