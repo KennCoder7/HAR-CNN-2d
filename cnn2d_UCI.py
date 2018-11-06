@@ -146,15 +146,6 @@ with tf.Session() as session:
             print(cm, '\n')
 
 
-# Epoch:  71  Training Loss:  0.6382424  Training Accuracy:  0.9541621
-# Epoch:  72  Training Loss:  2.3883731  Training Accuracy:  0.9457291
-# Epoch:  73  Training Loss:  0.4843847  Training Accuracy:  0.9570185
-# Epoch:  74  Training Loss:  0.9577097  Training Accuracy:  0.9562024
-# Epoch:  75  Training Loss:  0.93285394  Training Accuracy:  0.95130575
-# Epoch:  76  Training Loss:  0.40557405  Training Accuracy:  0.94708925
-# Epoch:  77  Training Loss:  10.495555  Training Accuracy:  0.92138195
-# Epoch:  78  Training Loss:  0.67067504  Training Accuracy:  0.9400163
-# Epoch:  79  Training Loss:  4.0036383  Training Accuracy:  0.9526659
 # Epoch:  80  Training Loss:  1.1851147  Training Accuracy:  0.9548422
 # Testing Accuracy: 0.9144893
 # [[461  13  22   0   0   0]
@@ -164,15 +155,6 @@ with tf.Session() as session:
 #  [  0   1   0  61 470   0]
 #  [  0   0   0   0   0 537]]
 #
-# Epoch:  81  Training Loss:  1.3421048  Training Accuracy:  0.9523939
-# Epoch:  82  Training Loss:  0.45150667  Training Accuracy:  0.9568825
-# Epoch:  83  Training Loss:  5.5236573  Training Accuracy:  0.9389282
-# Epoch:  84  Training Loss:  0.3815871  Training Accuracy:  0.95973885
-# Epoch:  85  Training Loss:  0.3512088  Training Accuracy:  0.9434168
-# Epoch:  86  Training Loss:  5.634105  Training Accuracy:  0.9349837
-# Epoch:  87  Training Loss:  0.4791569  Training Accuracy:  0.94178456
-# Epoch:  88  Training Loss:  0.58426017  Training Accuracy:  0.9460011
-# Epoch:  89  Training Loss:  0.7302053  Training Accuracy:  0.94640917
 # Epoch:  90  Training Loss:  0.34810036  Training Accuracy:  0.9556583
 # Testing Accuracy: 0.89888024
 # [[460  13  23   0   0   0]
@@ -182,15 +164,6 @@ with tf.Session() as session:
 #  [  0   2   0  64 466   0]
 #  [  0   0   0   0   0 537]]
 #
-# Epoch:  91  Training Loss:  0.3713098  Training Accuracy:  0.960827
-# Epoch:  92  Training Loss:  0.73379207  Training Accuracy:  0.94817734
-# Epoch:  93  Training Loss:  0.30592585  Training Accuracy:  0.95742655
-# Epoch:  94  Training Loss:  0.33291447  Training Accuracy:  0.95593035
-# Epoch:  95  Training Loss:  0.34828228  Training Accuracy:  0.96055496
-# Epoch:  96  Training Loss:  0.26480007  Training Accuracy:  0.95905876
-# Epoch:  97  Training Loss:  0.3033659  Training Accuracy:  0.9510337
-# Epoch:  98  Training Loss:  0.35549858  Training Accuracy:  0.960963
-# Epoch:  99  Training Loss:  0.26124662  Training Accuracy:  0.9502176
 # Epoch:  100  Training Loss:  0.28566658  Training Accuracy:  0.96055496
 # Testing Accuracy: 0.8985409
 # [[461  10  23   0   2   0]
