@@ -25,29 +25,29 @@ def not_exist(arr, array):
     return True
 
 
-def array_algorithm1(SI):
-    SIS = [1]
-    SI_new = [SI[0]]
+def permutation_algorithm(inputs):
+    index = [1]
+    outputs = [inputs[0]]
     i = 1
     j = i + 1
     while i != j:
-        if j > len(SI):
+        if j > len(inputs):
             j = 1
-        elif not_exist([i, j], SIS) and not_exist([j, i], SIS):
-            SI_new.append(SI[j-1])
-            SIS.append(j)
+        elif not_exist([i, j], index) and not_exist([j, i], index):
+            outputs.append(inputs[j - 1])
+            index.append(j)
             i = j
             j = j + 1
         else:
             j = j + 1
-    return SI_new[0:-1]  # 123456789 135792468 147158259 369483726
+    return outputs[0:-1]  # 123456789 135792468 147158259 369483726
 
 
 def seg_algorithm1(data):
-    new_arr1 = array_algorithm1(read_array(data, 0))
+    new_arr1 = permutation_algorithm(read_array(data, 0))
     for j in range(data.shape[1]):
         if j != 0:
-            new_arr1 = np.vstack((new_arr1, array_algorithm1(read_array(data, j))))
+            new_arr1 = np.vstack((new_arr1, permutation_algorithm(read_array(data, j))))
     return new_arr1.transpose().reshape((new_arr1.shape[1], new_arr1.shape[0], 1))  # (36, 128, 1)
 
 
