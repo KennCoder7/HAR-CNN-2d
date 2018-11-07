@@ -5,9 +5,9 @@ import time
 
 initial_time = time.time()
 print("### Process1 --- initial ###")
-train_x = np.load('UCI_data/np_2d/np_train_x_dft_v1.npy')
+train_x = np.load('UCI_data/np_2d/np_train_x_dft_v2.npy')
 train_y = np.load('UCI_data/np_2d/np_train_y_2d.npy')
-test_x = np.load('UCI_data/np_2d/np_test_x_dft_v1.npy')
+test_x = np.load('UCI_data/np_2d/np_test_x_dft_v2.npy')
 test_y = np.load('UCI_data/np_2d/np_test_y_2d.npy')
 print("### train_y (labels) shape: ", train_y.shape, " ###")
 print("### Process2 --- data load ###")
@@ -18,7 +18,7 @@ seg_len = 128
 num_channels = 1
 num_labels = 6
 batch_size = 100
-learning_rate = 0.0001
+learning_rate = 0.001
 num_epoches = 10000
 num_batches = train_x.shape[0] // batch_size
 print("### num_batch: ", num_batches, " ###")
@@ -119,15 +119,15 @@ with tf.Session() as session:
             batch_y = train_y[offset:(offset + batch_size)]
             _, c = session.run([train_op, loss], feed_dict={X: batch_x, Y: batch_y})
             # cost_history = np.append(cost_history, c)
-        if (epoch + 1) % 5 == 0:
-            print("Epoch: ", epoch+1, " Training Loss: ", c,
+        if (epoch + 1) % 50 == 0:
+            print("# Epoch: ", epoch+1, " Training Loss: ", c,
                   " Training Accuracy: ", session.run(accuracy, feed_dict={X: train_x, Y: train_y}))
-        if (epoch + 1) % 10 == 0:
-            print("Testing Accuracy:", session.run(accuracy, feed_dict={X: test_x, Y: test_y}))
         if (epoch + 1) % 100 == 0:
-            pred_y = session.run(tf.argmax(y_, 1), feed_dict={X: test_x})
-            cm = metrics.confusion_matrix(np.argmax(test_y, 1), pred_y,)
-            print(cm, '\n')
+            print("# Testing Accuracy:", session.run(accuracy, feed_dict={X: test_x, Y: test_y}))
+        # if (epoch + 1) % 100 == 0:
+        #     pred_y = session.run(tf.argmax(y_, 1), feed_dict={X: test_x})
+        #     cm = metrics.confusion_matrix(np.argmax(test_y, 1), pred_y,)
+        #     print(cm, '\n')
 
 
 # 2018/11/5 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer
@@ -145,3 +145,15 @@ with tf.Session() as session:
 # Epoch:  655  Training Loss:  0.2106536  Training Accuracy:  0.98762244
 # Epoch:  660  Training Loss:  0.07344559  Training Accuracy:  0.98775846
 # Testing Accuracy: 0.9192399
+
+# 2018/11/5 data v1-->v2 lr/10
+# Epoch:  100  Training Loss:  0.5538861  Training Accuracy:  0.9661317
+# Testing Accuracy: 0.892433
+# Epoch:  200  Training Loss:  0.40065053  Training Accuracy:  0.9863983
+# Testing Accuracy: 0.9233118
+# Epoch:  300  Training Loss:  0.6553461  Training Accuracy:  0.9960555
+# Testing Accuracy: 0.9192399
+# Epoch:  400  Training Loss:  0.00082163897  Training Accuracy:  0.9978237
+# Testing Accuracy: 0.9243298
+# Epoch:  500  Training Loss:  2.2411463e-05  Training Accuracy:  0.9990479
+# Testing Accuracy: 0.92602646

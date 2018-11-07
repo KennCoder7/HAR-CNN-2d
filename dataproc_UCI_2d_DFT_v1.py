@@ -1,7 +1,7 @@
 import numpy as np
 
-train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1_v1.npy')
-test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1_v1.npy')
+train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1_v2.npy')
+test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1_v2.npy')
 
 
 def dataset_dft(data, proc_name):
@@ -20,9 +20,9 @@ def dataset_dft(data, proc_name):
 
 
 test_x_dft = dataset_dft(test_x, "test")
-np.save("./UCI_data/np_2d/np_test_x_dft_v1.npy", test_x_dft)
+np.save("./UCI_data/np_2d/np_test_x_dft_v2.npy", test_x_dft)
 print(test_x_dft.shape)     # (2947, 36, 128, 1)
 train_x_dft = dataset_dft(train_x, "train")
-np.save("./UCI_data/np_2d/np_train_x_dft_v1.npy", train_x_dft)
+np.save("./UCI_data/np_2d/np_train_x_dft_v2.npy", train_x_dft)
 print(train_x_dft.shape)    # (7352, 36, 128, 1)
 

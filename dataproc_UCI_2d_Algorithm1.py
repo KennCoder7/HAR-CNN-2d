@@ -66,18 +66,8 @@ def dataset_algorithm1(data, proc_name):
 
 
 train_x_algorithm1 = dataset_algorithm1(train_x, "train")
-np.save("./UCI_data/np_2d/np_train_x_algorithm1_v1.npy", train_x_algorithm1)
+np.save("./UCI_data/np_2d/np_train_x_algorithm1_v2.npy", train_x_algorithm1)
 print(train_x_algorithm1.shape)    # (7352, 36, 128, 1)
 test_x_algorithm1 = dataset_algorithm1(test_x, "test")
-np.save("./UCI_data/np_2d/np_test_x_algorithm1_v1.npy", test_x_algorithm1)
+np.save("./UCI_data/np_2d/np_test_x_algorithm1_v2.npy", test_x_algorithm1)
 print(test_x_algorithm1.shape)     # (2947, 36, 128, 1)
-
-
-# test = test_x
-# test_d = test[0]
-# # print(test_d.shape)     # (9, 128, 1)
-# # print(test[0:2].shape)    # (2, 9, 128, 1)
-# # print(test_d[0:2].shape)    # (2, 128, 1)
-# # print(test_d[:, 0].reshape(9).shape)    # (9,)
-# print(read_array(test_d, 0))
-# print(read_array_old(test_d, 0))

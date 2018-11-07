@@ -3,9 +3,9 @@ import numpy as np
 from sklearn import metrics
 
 print("### Process1 --- data load ###")
-train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1_v1.npy')
+train_x = np.load('UCI_data/np_2d/np_train_x_algorithm1_v2.npy')
 train_y = np.load('UCI_data/np_2d/np_train_y_2d.npy')
-test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1_v1.npy')
+test_x = np.load('UCI_data/np_2d/np_test_x_algorithm1_v2.npy')
 test_y = np.load('UCI_data/np_2d/np_test_y_2d.npy')
 print("### train_y (labels) shape: ", train_y.shape, " ###")
 print("### Process2 --- data spilt ###")
@@ -115,15 +115,15 @@ with tf.Session() as session:
             batch_y = train_y[offset:(offset + batch_size)]
             _, c = session.run([train_op, loss], feed_dict={X: batch_x, Y: batch_y})
             # cost_history = np.append(cost_history, c)
-        if (epoch + 1) % 5 == 0:
-            print("Epoch: ", epoch+1, " Training Loss: ", c,
+        if (epoch + 1) % 50 == 0:
+            print("# Epoch: ", epoch+1, " Training Loss: ", c,
                   " Training Accuracy: ", session.run(accuracy, feed_dict={X: train_x, Y: train_y}))
-        if (epoch + 1) % 10 == 0:
-            print("Testing Accuracy:", session.run(accuracy, feed_dict={X: test_x, Y: test_y}))
         if (epoch + 1) % 100 == 0:
-            pred_y = session.run(tf.argmax(y_, 1), feed_dict={X: test_x})
-            cm = metrics.confusion_matrix(np.argmax(test_y, 1), pred_y,)
-            print(cm, '\n')
+            print("# Testing Accuracy:", session.run(accuracy, feed_dict={X: test_x, Y: test_y}))
+        # if (epoch + 1) % 100 == 0:
+        #     pred_y = session.run(tf.argmax(y_, 1), feed_dict={X: test_x})
+        #     cm = metrics.confusion_matrix(np.argmax(test_y, 1), pred_y,)
+        #     print(cm, '\n')
 
 
 # 2018/11/3  5c5*5-p4*4-10c5*5-p2*2-fc100-fc100-sof AdamOptimizer
@@ -179,43 +179,12 @@ with tf.Session() as session:
 #  [  1  23   3   0   0 510]]
 
 # 2018/11/3 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer
-# Epoch:  10  Training Loss:  3.9821105  Training Accuracy:  0.94096845
-# Testing Accuracy: 0.8951476
-# [[491   1   4   0   0   0]
-#  [ 22 427  22   0   0   0]
-#  [  3   4 413   0   0   0]
-#  [  2  19   0 343 122   5]
-#  [  2   9   0  58 463   0]
-#  [  0  27   0   0   0 510]]
-# Epoch:  20  Training Loss:  2.9272904  Training Accuracy:  0.9466812
-# Testing Accuracy: 0.9083814
-# Epoch:  30  Training Loss:  2.2685628  Training Accuracy:  0.9494015
-# Testing Accuracy: 0.9165253
-# [[483   2  11   0   0   0]
-#  [  3 464   4   0   0   0]
-#  [  1   2 417   0   0   0]
-#  [  0  20   0 325 141   5]
-#  [  2   4   0  29 497   0]
-#  [  0  27   0   0   0 510]]
-# Epoch:  40  Training Loss:  1.7567424  Training Accuracy:  0.9488574
-# Testing Accuracy: 0.9175433
-# Epoch:  60  Training Loss:  0.84365696  Training Accuracy:  0.9508977
-# Testing Accuracy: 0.912114
-# Epoch:  80  Training Loss:  0.72701436  Training Accuracy:  0.960963
-# Testing Accuracy: 0.9070241
+# Epoch:  10  Training Loss:  3.9821105  Training Accuracy:  0.940968451
 # Epoch:  100  Training Loss:  0.58589244  Training Accuracy:  0.9576986
 # Testing Accuracy: 0.90872073
 
 
 # 2018/11/3 10c5*5-p4*4-100c5*5-p2*4-fc120-sof AdamOptimizer  fc(tanh->relu)  Xdrop
-# Epoch:  35  Training Loss:  2.2881691  Training Accuracy:  0.9357998
-# Epoch:  40  Training Loss:  0.65968466  Training Accuracy:  0.94260067
-# Testing Accuracy: 0.90770274
-# Epoch:  45  Training Loss:  1.4417223  Training Accuracy:  0.94178456
-# Epoch:  50  Training Loss:  1.0055159  Training Accuracy:  0.9383841
-# Testing Accuracy: 0.8982016
-
-# Epoch:  295  Training Loss:  0.060113505  Training Accuracy:  0.9908868
 # Epoch:  300  Training Loss:  0.008091084  Training Accuracy:  0.9872144
 # Testing Accuracy: 0.9175433
 # [[479   2  15   0   0   0]
@@ -225,12 +194,6 @@ with tf.Session() as session:
 #  [  0   5   0  97 430   0]
 #  [  0   1   0   0   0 536]]
 #
-# Epoch:  305  Training Loss:  0.0593417  Training Accuracy:  0.9874864
-# Epoch:  310  Training Loss:  0.014059154  Training Accuracy:  0.99115884
-# Testing Accuracy: 0.91890055
-# Epoch:  315  Training Loss:  0.0044265296  Training Accuracy:  0.99115884
-# Epoch:  320  Training Loss:  0.011148976  Training Accuracy:  0.99265504
-# Testing Accuracy: 0.9239905
 # Epoch:  325  Training Loss:  0.026298754  Training Accuracy:  0.9866703
 # Epoch:  330  Training Loss:  0.004654552  Training Accuracy:  0.9933351
 # Testing Accuracy: 0.92840177
@@ -248,3 +211,9 @@ with tf.Session() as session:
 #  [  0   0   0 384  82  25]
 #  [  0   0   0  95 437   0]
 #  [  0   1   0   8   0 528]]
+
+# 2018/11/7 data v1-->v2
+# Epoch:  100  Training Loss:  0.09899979  Training Accuracy:  0.9721164
+# Testing Accuracy: 0.93722427
+# Epoch:  300  Training Loss:  0.018415827  Training Accuracy:  0.9902067
+# Testing Accuracy: 0.92025787
