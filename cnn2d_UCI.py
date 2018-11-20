@@ -29,10 +29,10 @@ print("### Process3 --- define ###")
 # convolution layer 1
 conv1 = tf.layers.conv2d(
     inputs=X,
-    filters=32,
-    kernel_size=[3, 2],
+    filters=10,
+    kernel_size=[2, 5],
     strides=[1, 1],
-    padding='same',
+    padding='valid',
     activation=tf.nn.relu
 )
 print("### convolution layer 1 shape: ", conv1.shape, " ###")
@@ -40,8 +40,8 @@ print("### convolution layer 1 shape: ", conv1.shape, " ###")
 # pooling layer 1
 pool1 = tf.layers.max_pooling2d(
     inputs=conv1,
-    pool_size=[3, 2],
-    strides=[3, 2],
+    pool_size=[1, 4],
+    strides=[1, 4],
     padding='same'
 )
 print("### pooling layer 1 shape: ", pool1.shape, " ###")
@@ -49,10 +49,10 @@ print("### pooling layer 1 shape: ", pool1.shape, " ###")
 # convolution layer 2
 conv2 = tf.layers.conv2d(
     inputs=pool1,
-    filters=64,
-    kernel_size=[3, 2],
+    filters=100,
+    kernel_size=[2, 5],
     strides=[1, 1],
-    padding='same',
+    padding='valid',
     activation=tf.nn.relu
 )
 print("### convolution layer 2 shape: ", conv2.shape, " ###")
@@ -60,40 +60,20 @@ print("### convolution layer 2 shape: ", conv2.shape, " ###")
 # pooling layer 2
 pool2 = tf.layers.max_pooling2d(
     inputs=conv2,
-    pool_size=[3, 2],
-    strides=[3, 2],
-    padding='same'
+    pool_size=[2, 4],
+    strides=[2, 4],
+    padding='valid'
 )
 print("### pooling layer 2 shape: ", pool2.shape, " ###")
 
-# convolution layer 3
-conv3 = tf.layers.conv2d(
-    inputs=pool2,
-    filters=128,
-    kernel_size=[3, 2],
-    strides=[1, 1],
-    padding='same',
-    activation=tf.nn.relu
-)
-print("### convolution layer 3 shape: ", conv3.shape, " ###")
-
-# pooling layer 3
-pool3 = tf.layers.max_pooling2d(
-    inputs=conv3,
-    pool_size=[3, 2],
-    strides=[3, 2],
-    padding='same'
-)
-print("### pooling layer 3 shape: ", pool3.shape, " ###")
-
-shape = pool3.get_shape().as_list()
-flat = tf.reshape(pool3, [-1, shape[1] * shape[2] * shape[3]])
+shape = pool2.get_shape().as_list()
+flat = tf.reshape(pool2, [-1, shape[1] * shape[2] * shape[3]])
 
 # fully connected layer 1
 fc1 = tf.layers.dense(
     inputs=flat,
-    units=100,
-    activation=tf.nn.tanh
+    units=180,
+    activation=tf.nn.relu
 )
 fc1 = tf.nn.dropout(fc1, keep_prob=0.8)
 print("### fully connected layer 1 shape: ", fc1.shape, " ###")
@@ -102,20 +82,20 @@ print("### fully connected layer 1 shape: ", fc1.shape, " ###")
 fc2 = tf.layers.dense(
     inputs=fc1,
     units=100,
-    activation=tf.nn.tanh
+    activation=tf.nn.relu
 )
 fc2 = tf.nn.dropout(fc2, keep_prob=0.8)
 print("### fully connected layer 2 shape: ", fc2.shape, " ###")
 
-# fully connected layer 3
-fc3 = tf.layers.dense(
+# softmax
+sof = tf.layers.dense(
     inputs=fc2,
     units=num_labels,
     activation=tf.nn.softmax
 )
-print("### fully connected layer 3 shape: ", fc3.shape, " ###")
+print("### softmax shape: ", sof.shape, " ###")
 
-y_ = fc3
+y_ = sof
 print("### prediction shape: ", y_.get_shape(), " ###")
 
 loss = -tf.reduce_sum(Y * tf.log(tf.clip_by_value(y_, 1e-10, 1.0)))
@@ -137,9 +117,10 @@ with tf.Session() as session:
             batch_y = train_y[offset:(offset + batch_size)]
             _, c = session.run([train_op, loss], feed_dict={X: batch_x, Y: batch_y})
             # cost_history = np.append(cost_history, c)
-        print("Epoch: ", epoch+1, " Training Loss: ", c,
-              " Training Accuracy: ", session.run(accuracy, feed_dict={X: train_x, Y: train_y}))
-        if (epoch+1) % 10 == 0:
+        if (epoch + 1) % 100 == 0:
+            print("Epoch: ", epoch+1, " Training Loss: ", c,
+                  " Training Accuracy: ", session.run(accuracy, feed_dict={X: train_x, Y: train_y}))
+        if (epoch+1) % 500 == 0:
             print("Testing Accuracy:", session.run(accuracy, feed_dict={X: test_x, Y: test_y}))
             pred_y = session.run(tf.argmax(y_, 1), feed_dict={X: test_x})
             cm = metrics.confusion_matrix(np.argmax(test_y, 1), pred_y,)
