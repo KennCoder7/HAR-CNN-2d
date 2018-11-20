@@ -126,31 +126,12 @@ with tf.Session() as session:
             cm = metrics.confusion_matrix(np.argmax(test_y, 1), pred_y,)
             print(cm, '\n')
 
-
-# Epoch:  80  Training Loss:  1.1851147  Training Accuracy:  0.9548422
-# Testing Accuracy: 0.9144893
-# [[461  13  22   0   0   0]
-#  [  4 429  38   0   0   0]
-#  [ 10   2 408   0   0   0]
-#  [  0   7   0 388  96   0]
-#  [  0   1   0  61 470   0]
-#  [  0   0   0   0   0 537]]
-#
-# Epoch:  90  Training Loss:  0.34810036  Training Accuracy:  0.9556583
-# Testing Accuracy: 0.89888024
-# [[460  13  23   0   0   0]
-#  [ 28 409  34   0   0   0]
-#  [ 15   3 402   0   0   0]
-#  [  0  11   1 366 113   0]
-#  [  0   2   0  64 466   0]
-#  [  0   0   0   0   0 537]]
-#
-# Epoch:  100  Training Loss:  0.28566658  Training Accuracy:  0.96055496
-# Testing Accuracy: 0.8985409
-# [[461  10  23   0   2   0]
-#  [ 10 419  42   0   0   0]
-#  [ 13   3 404   0   0   0]
-#  [  0  11   0 364 116   0]
-#  [  0   2   0  69 461   0]
+# Epoch:  500  Training Loss:  0.00016904795  Training Accuracy:  1.0
+# Testing Accuracy: 0.9582626
+# [[472   0  24   0   0   0]
+#  [ 11 447  13   0   0   0]
+#  [  6   0 414   0   0   0]
+#  [  0   4   0 442  45   0]
+#  [  2   0   0  19 511   0]
 #  [  0   0   0   0   0 537]]
 
